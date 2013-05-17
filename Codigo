@@ -1,0 +1,756 @@
+/*Avila Ruiz Mario arturo
+ 208565961
+ Practica Individual
+ */
+
+import java.util.*;
+
+
+public class CuentaBancaria
+{
+  //atributos 
+	int numcuenta;
+	double saldoactual;
+	String nombrepropietario;
+	
+	//constructor 
+	
+	public CuentaBancaria(int numcuenta, double saldoactual, String nombrepropietario)
+	{
+		this.numcuenta=numcuenta;
+		this.saldoactual=saldoactual;
+		this.nombrepropietario=nombrepropietario;
+	}
+	
+	//Familia de metodos mostrar
+	
+	public void mostrarNumCuenta()
+	{
+		System.out.print("Numero de cuenta:");
+		System.out.println(""+ numcuenta);
+	}
+	
+	public void mostrarSaldoActual()
+	{
+		System.out.print("Saldo actual:");
+		System.out.println(" "+ saldoactual);
+	}
+	
+	/*public void mostrarNumCuenta()
+	{
+		System.out.println("Numero de cuenta:");
+		System.out.print(""+ numcuenta);
+	}*/
+	
+	public void mostrarNombrePropietario()
+	{
+		System.out.println("Nombre del propietario: "+nombrepropietario);
+	}
+	
+	//Familia de metodos cambiar
+	
+	/*public void cambiarNumCuenta(int nm)
+	{
+		numcuenta=nm;
+	}*/
+	
+	public void cambiarSaldoActual(double sd)
+	{
+		saldoactual=sd;
+	}
+	
+	public void cambiarNumCuenta(int nm)
+	{
+		numcuenta=nm;
+	}
+	
+	public void cambiarNombrePropietario(String nomp)
+	{
+		nombrepropietario=nomp;
+	}
+	
+	public void cambiarCuentaBancaria(int nm, double sd, String nomp)
+	{
+		numcuenta=nm; saldoactual=sd; nombrepropietario=nomp;
+	}
+	
+	//familia de metodos regresar
+	
+	public int regresarNumCuenta()
+	{
+		return numcuenta;
+	}
+	
+	public double regresarSaldoActual()
+	{
+		return saldoactual;
+	}
+	
+	public String regresarNombrepropietario()
+	{
+		return nombrepropietario;
+	}
+	
+	public void depositar()
+	{
+		double deposito;
+		char opcion;
+		Scanner s=new Scanner(System.in);
+		System.out.println("ingrese la cantidad a depositar:");
+		deposito=s.nextDouble();
+		System.out.println("¿La cantidad es correcta?"+deposito+"S/N");
+		opcion=s.next().charAt(0);
+		if (opcion=='S' || opcion=='s') {
+			saldoactual+=deposito;
+			//mostrarSaldoActual;
+		}
+		if (opcion=='N' || opcion=='n')
+		{
+			System.out.println("ingrese la cantidad a depositar:");
+			deposito=s.nextDouble();
+		}
+			else if(opcion!='S' && opcion!='s' && opcion!='N' && opcion!='n')
+			{
+				System.out.println("Verifique la opcion");
+			}
+	}
+	
+	public void retirar(double cantidad)
+		{
+			saldoactual-=cantidad;
+		}
+	
+	public static void main(String a[])
+		{
+			CuentaDeInversion cdi[]=new CuentaDeInversion[9];
+			CuentaDeCheques cdc[]=new CuentaDeCheques[9];
+			Scanner S=new Scanner(System.in);
+			int ni=0, nc=0, i;// las variables "n" serviran para verificar la cantidad de cuentas que es posible crear.
+			int nmc,nmi;//variables utilizadas para hacer comparaciones con los numeros de cuentas: "numero cuenta inversion" y "numero cuenta cheques"		
+			int menucontrol=1;//variable auxiliar para los retornos a menu principal.
+			
+			
+			do{//completar con un do-while para las opciones de retorno al menu principal y salida del programa
+				System.out.println("MENU PRINCIPAL");
+				System.out.println("1. Altas");//TERMINADO. VERIFICAR.
+				System.out.println("2. Bajas");//TERMINADO
+				System.out.println("3. Cambios");//TERMINADO
+				System.out.println("4. Consultas");//TERMINADO
+				System.out.println("5. Depositar");//TERMINADO
+				System.out.println("6. Retirar");//TERMINADO, VERIFICAR COMENTARIOS
+				System.out.println("7. Salir");//TERMINADO
+				System.out.println("Elija opcion:");
+				int option=S.nextInt();
+			
+				switch (option) {
+					case 1:
+						System.out.println("MENU ALTAS");
+						System.out.println("1.Alta cuenta de cheques");
+						System.out.println("2.Alta cuenta de inversion");
+						System.out.println("3.Regresar al menu principal");
+						System.out.println("Elija una opcion:");
+						option=S.nextInt();
+						//S.reset();
+					
+						switch (option) {
+							
+							case 1:
+								int numcuenta, numcheques;
+								double saldoinicial;
+								String nuevopropie;
+							
+								if(nc<=9)
+								{
+									//S.reset();
+									System.out.println("Ingrese el nombre del propietario: ");
+									S.reset();
+									nuevopropie=S.nextLine();
+									nuevopropie=S.nextLine();
+									System.out.println("Ingrese el numero de cuenta:");
+									numcuenta=S.nextInt();
+									System.out.println("Ingrese el numero de cheques disponibles para la cuenta:");
+									numcheques=S.nextInt();
+									System.out.println("Ingrese el saldo inicial de la cuenta:");
+									saldoinicial=S.nextDouble();
+								
+									if (nc==0) {
+										cdc[nc]= new CuentaDeCheques(numcuenta, saldoinicial, nuevopropie, numcheques);
+										nc++;
+									}
+									else{
+									for (i=0; i<=9; i++) 
+									{
+										nmc=cdc[i].regresarNumCuenta();
+										if (nmc==numcuenta) 
+										{
+											System.out.print("El numero de cuenta que proporciono ya existe,");
+											System.out.println("Ingrese numero de cuenta:");
+											numcuenta=S.nextInt();
+											break;
+										}
+									}
+
+									cdc[nc]= new CuentaDeCheques(numcuenta, saldoinicial, nuevopropie, numcheques);
+									nc++;
+									}
+								}
+								else 
+									{
+										System.out.println("Limite de cuentas alcanzado, no es posible crear mas cuentas");
+									}
+							break;
+							
+							case 2:
+								String plazo;
+															
+								if(ni<=9)//verifica que no se sobrepase del numero posible de cuentas posibles
+								{
+							
+									System.out.println("Ingrese el nombre del propietario:");
+									nuevopropie=S.nextLine();
+									nuevopropie=S.nextLine();
+									System.out.println("Ingrese el numero de cuenta:");
+									numcuenta=S.nextInt();
+									System.out.println("Ingrese el plazo:");
+									plazo=S.nextLine();
+									plazo=S.nextLine();
+									System.out.println("Ingrese el saldo inicial de la cuenta:");
+									saldoinicial=S.nextDouble();
+									
+									if (ni==0) {
+										cdi[ni]= new CuentaDeInversion(numcuenta, saldoinicial, nuevopropie, plazo);
+										ni+=1;
+										System.out.println("Se ha dado de alta la cuenta correctamente.");
+										
+									}
+									else{
+									for (i=0; i<=9; i++) 
+									{//VERIFICA que los numeros de cuenta no se repitan
+										nmi=cdi[i].regresarNumCuenta();
+										if (nmi==numcuenta)
+										{
+											System.out.print("El numero de cuenta que proporciono ya existe,");
+											System.out.println("Ingrese numero de cuenta diferente: ");
+											numcuenta=S.nextInt();
+											if (numcuenta==nmi) {
+												System.out.print("EL NUMERO DE CUENTA QUE PROPORCIONO YA EXISTE");
+												System.out.println("INGRESE UN NUMERO DE CUENTA DIFERENTE : ");
+												numcuenta=S.nextInt();
+											}
+											break;
+										}
+									}
+							
+									cdi[ni]= new CuentaDeInversion(numcuenta, saldoinicial, nuevopropie, plazo);
+									ni+=1;
+									System.out.println("Se ha dado de alta la cuenta correctamente.");
+									}
+								}
+								else 
+									{
+										System.out.println("Limite de cuentas alcanzado, no es posible crear mas cuentas");
+									}
+							
+							
+							break;
+							
+							case 3:
+								menucontrol=1;
+							break;	
+							
+						default:
+							System.out.println("Verifique la opcion");
+							menucontrol=1;
+							break;
+					}
+						
+						
+					break;
+					
+				case 2:
+					System.out.println("MENU BAJAS");
+					System.out.println("1.Baja cuenta de cheques");
+					System.out.println("2.Baja cuenta de inversion");
+					System.out.println("3.Regresar al menu principal");
+					System.out.println("Elija una opcion:");
+					int optionB=S.nextInt();
+					
+					switch (optionB) {
+						case 1:
+							int numcuenta;
+							System.out.print("Ingrese el numero cuenta de cheques: ");
+							numcuenta=S.nextInt();
+							if (nc==0) {
+								System.out.println("No existen cuentas de cheques.");
+								menucontrol=1;
+							}
+							else{
+								for (i=0; i<=9; i++)
+								{
+									nmc=cdc[i].regresarNumCuenta();
+									if (nmc==numcuenta)
+									{
+										cdc[i]=null;
+										System.out.println("La cuenta ha sido elimininada");
+										menucontrol=1;
+										nc-=1;
+										break;
+									}
+									else {
+										System.out.println("No se encontro el numero de cuenta");
+									}
+
+								}
+							}
+							break;
+						
+						case 2:
+							//int numcuenta;
+							System.out.print("Ingrese el numero cuenta de inversion: ");
+							numcuenta=S.nextInt();
+							if (ni==0) {
+								System.out.println("No existen cuentas de inversion.");
+								menucontrol=1;
+							}
+							else
+							{
+								for (i=0; i<=9; i++)
+								{
+									nmi=cdi[i].regresarNumCuenta();
+									if (nmi==numcuenta)
+									{
+										cdi[i]=null;
+										System.out.println("La cuenta ha sido elimininada");
+										break;
+										
+									}
+								}
+							}
+							break;
+						
+						case 3:
+							menucontrol=1;
+							break;	
+						
+						default:
+							System.out.println("Verifique la opcion, invalida");
+							menucontrol=1;
+							break;
+					}					
+					break;
+				
+				case 3:
+					if (nc==0 && ni==0) {
+						System.out.println("NO existen cuentas para verificar.");
+						menucontrol=1;
+					}
+					else{
+					System.out.print("Ingrese el numero de cuenta en el que se realizaran cambios: ");
+					option=S.nextInt();
+					for (i=0; i<=9; i++) {
+						 nmi=cdi[i].regresarNumCuenta();
+						 nmc=cdc[i].regresarNumCuenta();
+						if (option==nmi) {
+							System.out.println("Se encontro el numero de cuenta");
+							System.out.println("MENU CUENTA DE INVERSION");
+							System.out.println("1. Nombre del propietario");
+							System.out.println("2. Plazo");
+							System.out.println("3. Regresar al menu principal");
+							System.out.print("Elija su opcion: ");
+							option=S.nextInt();
+							switch (option) {
+								case 1:
+									System.out.println("Ingrese el nuevo nombre del propietario:");
+									String nomp=S.nextLine();
+									nomp=S.nextLine();
+									cdi[i].cambiarNombrePropietario(nomp);
+									System.out.println("Nombre de nuevo propietario: ");
+									cdi[i].mostrarNombrePropietario();
+									break;
+									
+									case 2:
+										System.out.println("Plazo actual:");
+										cdi[i].mostrarPlazo();
+										System.out.println("Ingrese el nuevo plazo:");
+										String nuevoplazo=S.nextLine();
+										nuevoplazo=S.nextLine();
+										cdi[i].cambiarPlazo(nuevoplazo);
+										cdi[i].mostrarPlazo();
+									break;
+								
+									case 3:
+										menucontrol=1;
+									break;	
+								
+									default:
+										System.out.println("Verifique la opcion");
+										menucontrol=1;
+										break;
+								}
+								break;	
+							}
+						
+							if (option==nmc) {
+								System.out.println("Se encontro el numero de cuenta");
+								System.out.println("MENU CUENTA DE CHEQUES");
+								System.out.println("1. Nombre del propietario");
+								System.out.println("2. Numero de cheques");
+								System.out.println("3. Regresar al menu principal");
+								System.out.print("Elija su opcion: ");
+								option=S.nextInt();
+							
+								switch (option) {
+									case 1:
+										System.out.println("Ingrese el nuevo nombre del propietario:");
+										String nomp=S.nextLine();
+										cdc[i].cambiarNombrePropietario(nomp);
+										System.out.println("Nombre de nuevo propietario: ");
+										cdc[i].mostrarNombrePropietario();
+										break;
+									
+									case 2:
+										System.out.println("Numero de cheques actual: ");
+										cdc[i].mostrarNumCheques();
+										System.out.println("Ingrese el nuevo numero de cheques:");
+										int nuevonumche=S.nextInt();
+										cdc[i].cambiarNumCheques(nuevonumche);
+										cdc[i].mostrarNumCheques();
+										break;
+									
+									case 3:
+										menucontrol=1;
+										break;	
+								
+									default:
+										System.out.println("Verifique la opcion");
+										menucontrol=1;
+										break;
+								}
+								break;	
+							}
+							
+						}
+					}	
+					break;//menu principal
+					
+				case 4:
+					if (nc==0 && ni==0) {
+						System.out.println("No existen cuentas para realizar consultas.");
+						menucontrol=1;
+					}
+					else{
+					System.out.println("MENU DE CONSULTAS");
+					System.out.println("1. Consulta individual");
+					System.out.println("2. Consultas Cuentas de Cheques");
+					System.out.println("3. Consultas Cuentas de Inversion");
+					System.out.println("4. Regresar al menu prinicipal");
+					System.out.println("Elija una opcion:");
+					option=S.nextInt(); 
+					
+					
+					switch (option) {
+							case 1:
+								int cuentav;
+							
+								System.out.print("Ingrese el numero de cuenta a consultar: ");
+								cuentav=S.nextInt();
+								if (ni==0) {
+									menucontrol=1;
+								}
+								else {
+																
+									for (i=0; i<=ni; i++) 
+									{
+										nmi=cdi[i].regresarNumCuenta();
+
+										if(cuentav==nmi) 
+										{
+											cdi[i].mostrarNombrePropietario();
+											cdi[i].mostrarNumCuenta();
+											cdi[i].mostrarSaldoActual();
+											cdi[i].mostrarPlazo();
+											break;
+										}
+								
+										
+									}
+								}
+								if (nc==0) {
+									System.out.println("No existen cuentas.");
+								}
+								else
+								{
+									for (i=0; i<=nc;i++)
+									{
+										nmc=cdc[i].regresarNumCuenta();
+										if(cuentav==nmc) 
+										{
+											cdc[i].mostrarNombrePropietario();
+											cdc[i].mostrarNumCuenta();
+											cdc[i].mostrarSaldoActual();
+											cdc[i].mostrarNumCheques();
+											menucontrol=1;
+											if(i==nc && cuentav!=nmc)
+											{
+												System.out.println("No se encontro el numero de cuenta proporcionado, favor de verificarlo");
+												break;
+											}
+											break;
+										}
+									}
+								}
+								
+
+								break;
+							
+							case 2:
+							
+								if (nc==0) {
+									System.out.println("No existen cuentas de cheques.");
+									menucontrol=1;
+									break;
+								}
+								else
+								{
+									for (i=0; i<=nc; i++) 
+									{
+										nmc=cdc[i].regresarNumCuenta();
+										cdc[i].mostrarNombrePropietario();
+										cdc[i].mostrarNumCuenta();
+										cdc[i].mostrarSaldoActual();
+										cdc[i].mostrarNumCheques();
+									}
+								}
+							break;//menu principal
+							
+							case 3:
+								if (ni==0) {
+									System.out.println("No existen cuentas de Inversion.");
+									menucontrol=1;
+									break;
+									
+								}
+								else{
+									for (i=0; i<=ni; i++)
+									{
+										nmi=cdi[i].regresarNumCuenta();
+							
+										
+										cdi[i].mostrarNombrePropietario();
+										cdi[i].mostrarNumCuenta();
+										cdi[i].mostrarSaldoActual();
+										cdi[i].mostrarPlazo();
+										break;
+									}
+								}	
+							
+							break;
+							
+						case 4:
+							menucontrol=1;
+							break;	
+							
+						default:
+							System.out.println("Verifique la opcion");
+							menucontrol=1;
+							break;
+					}
+					}	
+					
+					break;//menu principal
+					
+				case 5:
+						int numcuentap;// numcuentav;	
+						System.out.print("Ingrese el numero de cuenta en el que desea depositar: ");
+						numcuentap=S.nextInt();	
+						for (i=0; i<=9; i++) {
+								nmi=cdi[i].regresarNumCuenta();
+								nmc=cdc[i].regresarNumCuenta();
+							if (numcuentap==nmi) 
+							{
+								cdi[i].depositar();
+								System.out.println("Transaccion realizada exitosamente.");
+								cdi[i].mostrarSaldoActual();
+								break;
+							}
+							if (numcuentap==nmc)
+							{
+								cdc[i].depositar();
+								System.out.println("Transaccion realizada exitosamente.");
+								cdc[i].mostrarSaldoActual();
+								break;
+							}
+							if(i==9 && numcuentap!=nmc && numcuentap!=nmi)
+							{	
+								System.out.println("No se encontro el numero de cuenta proporcionado, favor de verificarlo");
+								menucontrol=1;
+								break;
+							}
+						}
+					break;//menu principal
+					
+					
+					case 6:
+						//int numcuentap;
+						double retiro;
+						char opcion;
+							
+						System.out.print("Ingrese el numero de cuenta en el que desea retirar: ");
+						numcuentap=S.nextInt();	
+						if (ni==0) {
+							menucontrol=1;
+						}
+						else{
+							for (i=0; i<=9; i++) 
+							{	
+								nmi=cdi[i].regresarNumCuenta();
+								
+									if (numcuentap==nmi) 
+									{
+										System.out.println("Ingrese la cantidad a retirar:");	
+										retiro=S.nextDouble();	
+										System.out.println("¿La cantidad es correcta? "+retiro+" S/N");
+										opcion=S.next().charAt(0);
+									
+										if (opcion=='S' || opcion=='s')
+										{
+											cdi[i].retirar(retiro);
+											cdi[i].mostrarSaldoActual();
+											System.out.println("Transaccion realizada exitosamente.");
+											menucontrol=1;
+											break;
+										}
+									
+										if (opcion=='N' || opcion=='n')
+										{
+											menucontrol=1;
+											break;	
+										}
+											else if(opcion!='S' && opcion!='s' && opcion!='N' && opcion!='n') 
+											{
+												System.out.println("Verifique la opcion");
+												System.out.println("Se regresara a menu principal.");
+												menucontrol=1;
+											}
+									}
+								}		
+							}	//break;
+							
+						if (nc==0) 
+						{
+							menucontrol=1;
+							System.out.println("No hay cuentas existentes para hacer retiros.");
+						}
+							else{
+								for (i=0; i<=nc; i++) {
+									nmc=cdc[i].regresarNumCuenta();
+								
+								if (numcuentap==nmc)
+								{
+									System.out.println("Ingrese la cantidad a retirar:");	
+									retiro=S.nextDouble();	
+									System.out.println("¿La cantidad es correcta? "+retiro+" S/N");
+									opcion=S.next().charAt(0);
+										if (opcion=='S' || opcion=='s') {
+											cdc[i].retirar(retiro);
+											cdc[i].mostrarSaldoActual();
+											menucontrol=1;
+										}
+										if (opcion=='N' || opcion=='n')
+										{
+											menucontrol=1;
+											break;	
+										}
+											else 
+											{
+												System.out.println("Verifique la opcion");
+											}
+									}
+																										
+								
+								if(i==nc && numcuentap!=nmc)
+								{	
+									System.out.println("No se encontro el numero de cuenta proporcionado, favor de verificarlo");
+									menucontrol=1;
+									break;
+						
+								}
+							}
+						}		
+									
+					
+							break;//menu principal
+					
+					case  7:
+						menucontrol=0;
+						break;//menu principal	
+				
+				default:
+						System.out.println("Verifique la opcion");
+						menucontrol=1;
+						
+					break;
+				}
+			}while(menucontrol==1);
+		}
+			
+}//clase
+ 
+class CuentaDeCheques extends CuentaBancaria
+{
+	//atributos
+	int numcheques;
+	
+	//metodos
+	
+	public CuentaDeCheques(int ncuenta, double sactual, String npropietario, int ncheques)
+	{
+		super(ncuenta, sactual,npropietario);//numcuenta=ncuenta; saldoactual=sactual; nombrepropietario=npropietario; 
+		numcheques=ncheques;
+	}
+	
+	public void mostrarNumCheques()
+	{
+		System.out.println("Cheques disponibles: "+numcheques);
+	}
+	
+	public void cambiarNumCheques(int numcheques)
+	{
+		this.numcheques=numcheques;
+	}
+	
+	public int regresarNumCheques()
+	{
+		return numcheques;
+	}
+}
+
+//FIN DE CLASE
+
+class CuentaDeInversion extends CuentaBancaria{
+	//atributo
+	String plazo;
+	
+	//metodos
+	
+	public CuentaDeInversion(int ncuenta, double sactual, String npropietario, String plazo)
+	{
+		super(ncuenta, sactual,npropietario);
+		this.plazo=plazo;
+	}
+	
+	public void mostrarPlazo()
+	{
+		System.out.println("Plazo: "+plazo);
+	}
+	
+	public void cambiarPlazo(String plazo)
+	{
+		this.plazo=plazo;
+	}
+	
+	public String regresarPlazo()
+	{
+		return plazo;
+	}
+}//fin de la clase 
